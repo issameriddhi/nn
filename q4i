@@ -1,0 +1,172 @@
+DETAILED CODE EXPLANATION (XOR USING BACKPROPAGATION)
+🔹
+1. DATASET
+python
+X = np.array([[0,0],[0,1],[1,0],[1,1]])
+y = np.array([0,1,1,0]).reshape(-1,1)
+👉
+This defines the XOR problem
+Inputs: 2 features
+Output: 0 or 1
+👉
+.
+reshape(-1,1) converts output into column format
+✔ Required for matrix operations
+🔹
+2. INITIALIZATION
+python
+np.random.seed(1)
+👉
+Ensures same random weights every run
+python
+W1 = np.random.rand(2,2)
+b1 = np.random.rand(2)
+W2 = np.random.rand(2,1)
+b2 = np.random.rand(1)
+👉
+Weights and biases:
+Layer
+W1
+b1
+Input → Hidden
+Meaning
+Hidden bias
+W2
+Exported with AI Exporter
+Hidden → Output
+234 / 282
+Layer
+b2
+👉
+Shapes:
+2 inputs → 2 hidden neurons
+2 hidden → 1 output
+Meaning
+Output bias
+🔹
+3. ACTIVATION FUNCTION
+python
+def sigmoid(x):
+return 1 / (1 + np.exp(-x))
+👉
+Converts values to range (0,1)
+👉
+Adds non-linearity
+🔹
+4. TRAINING LOOP
+python
+for epoch in range(epochs):
+👉
+Repeat learning process multiple times
+👉
+Helps reduce error gradually
+🔹
+5. FORWARD PASS
+python
+hidden = sigmoid(np.dot(X, W1) + b1)
+👉
+Step:
+1. Multiply inputs with weights
+2. Add bias
+3. Apply sigmoid
+👉
+Output → hidden layer
+Exported with AI Exporter
+235 / 282
+python
+output = sigmoid(np.dot(hidden, W2) + b2)
+👉
+Hidden → output layer
+🔹
+6. ERROR CALCULATION
+python
+error = y - output
+👉
+Difference between:
+actual output
+predicted output
+🔹
+7. BACKPROPAGATION (CORE)
+🔸
+Output layer gradient
+python
+d_output = error * output * (1 - output)
+👉
+Uses derivative of sigmoid:
+′
+σ (x) =
+σ(x)(1 −σ(x))
+🔸
+Hidden layer gradient
+python
+d_hidden = d_output.dot(W2.T) * hidden * (1 - hidden)
+👉
+Error is propagated backward from output to hidden layer
+🔹
+8. WEIGHT UPDATE
+python
+Exported with AI Exporter
+236 / 282
+W2 += lr * hidden.T.dot(d_output)
+b2 += lr * d_output.sum(axis=0)
+👉
+Update output layer weights
+python
+W1 += lr * X.T.dot(d_hidden)
+b1 += lr * d_hidden.sum(axis=0)
+👉
+Update hidden layer weights
+👉
+Purpose: ✔ Reduce error
+✔ Improve predictions
+🔹
+9. PREDICTION
+python
+predictions = (output >= 0.5).astype(int)
+👉
+Converts probabilities → binary output
+🔹
+10. PLOTTING
+python
+plt.scatter(...)
+👉
+Shows:
+Class 0 points
+Class 1 points
+👉
+Visualization of XOR pattern
+🧠
+COMPLETE WORKING FLOW
+👉
+Input
+→ Hidden layer (sigmoid)
+Exported with AI Exporter
+237 / 282
+→ Output layer
+→ Error calculation
+→ Backpropagation
+→ Weight update
+→ Repeat
+🎤
+DETAILED VIVA EXPLANATION SCRIPT
+
+“This program implements XOR using a multilayer neural network trained with backpropagation.”
+“First, we define the XOR dataset, which is not linearly separable.”
+“We initialize weights and biases randomly for input-to-hidden and hidden-to-output layers.”
+“During forward propagation, inputs are multiplied with weights, bias is added, and sigmoid
+activation is applied to compute outputs.”
+👉
+
+“Then, we calculate the error as the difference between actual and predicted values.”
+“Using backpropagation, we compute gradients for output and hidden layers using the derivative of
+the sigmoid function.”
+👉
+
+“Weights and biases are updated using gradient descent to minimize the error.”
+“This process is repeated for multiple epochs until the network learns the XOR pattern.”
+“Finally, predictions are generated and visualized.”
+🔥
+STRONG CLOSING LINE
+👉
+“Backpropagation enables the network to learn non-linear decision boundaries required to solve
+XOR.

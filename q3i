@@ -1,0 +1,180 @@
+DETAILED CODE EXPLANATION (MLP – PATTERN CLASSIFICATION)
+🔹
+1. IMPORTS
+python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+👉
+Used for:
+Data handling (pandas)
+Numerical operations (numpy)
+Plotting (matplotlib)
+python
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+Exported with AI Exporter
+223 / 282
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix
+👉
+These are machine learning tools:
+Split data
+Scale features
+Train MLP
+Evaluate model
+🔹
+2. DATASET LOADING
+python
+data = pd.read_csv("sonar.csv", header=None)
+👉
+Loads Sonar dataset
+python
+X = data.iloc[:, :-1].values
+y = data.iloc[:, -1].values
+👉
+Split into:
+X → input features (60 columns)
+y → output labels
+python
+y = np.where(y == 'M', 1, 0)
+👉
+Convert:
+Mine → 1
+Rock → 0
+👉
+Because model needs numeric values
+🔹
+3. PREPROCESSING
+Exported with AI Exporter
+224 / 282
+python
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
+👉
+Standardization:
+Mean = 0
+Std = 1
+👉
+Important because: ✔ Neural networks perform better on scaled data
+🔹
+4. TRAIN-TEST SPLIT
+python
+X_train, X_test, y_train, y_test = train_test_split(
+X, y, test_size=0.2, random_state=42
+)
+👉
+Splits data:
+80% training
+20% testing
+👉
+Ensures model is tested on unseen data
+🔹
+5. MLP MODEL
+python
+mlp = MLPClassifier(
+hidden_layer_sizes=(30,),
+activation='relu',
+max_iter=300,
+random_state=42
+)
+👉
+Model definition:
+hidden_layer_sizes=(30,)
+→ 1 hidden layer with 30 neurons
+activation='relu'
+→ Non-linear activation
+Exported with AI Exporter
+225 / 282
+max_iter=300
+→ Training iterations
+🔹
+6. TRAINING
+python
+mlp.fit(X_train, y_train)
+👉
+Model learns from training data
+Internally:
+Forward pass
+Backpropagation
+Weight updates
+🔹
+7. TESTING
+python
+y_pred = mlp.predict(X_test)
+👉
+Model predicts output for test data
+🔹
+8. ACCURACY
+python
+acc = accuracy_score(y_test, y_pred)
+👉
+Measures correctness:
+Correct Predictions
+Accuracy = Total Predictions
+🔹
+9. CONFUSION MATRIX
+python
+cm = confusion_matrix(y_test, y_pred)
+Exported with AI Exporter
+226 / 282
+�
+�
+Shows:
+True Positive
+False Positive
+True Negative
+False Negative
+🔹
+10. PLOTTING
+python
+plt.imshow(cm)
+👉
+Visual representation of confusion matrix
+python
+plt.text(...)
+👉
+Displays numbers inside matrix
+🧠
+COMPLETE WORKING FLOW
+👉
+Load dataset
+→ Preprocess (scale)
+→ Split data
+→ Train MLP
+→ Predict output
+→ Evaluate using accuracy & confusion matrix
+🎤
+DETAILED VIVA EXPLANATION SCRIPT
+👉
+Speak this confidently 
+�
+�
+👉
+“This program implements a Multilayer Perceptron for pattern classification using the Sonar
+dataset.”
+👉
+“First, the dataset is loaded and divided into input features and output labels.”
+Exported with AI Exporter
+227 / 282
+�
+�
+“The output labels are converted into numeric form because neural networks require numerical
+inputs.”
+
+“Then, the data is standardized using StandardScaler to improve model performance.”
+“The dataset is split into training and testing sets so that the model can be evaluated on unseen
+data.”
+
+“Next, an MLPClassifier is defined with one hidden layer and ReLU activation function.”
+“The model is trained using the training data, where it learns patterns through forward propagation
+and backpropagation.”
+
+“After training, predictions are made on the test data.”
+“The performance is evaluated using accuracy and confusion matrix.”
+“The confusion matrix visually shows correct and incorrect classifications.”
+🔥
+STRONG CLOSING LINE
+👉
+“MLP is effective for pattern classification because it can learn complex non-linear relationships
+between input features and output classes.”

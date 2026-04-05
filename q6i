@@ -1,0 +1,151 @@
+DETAILED CODE EXPLANATION (PCA)
+🔹
+1. IMPORTS
+Exported with AI Exporter
+251 / 282
+python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+👉
+Used for:
+pandas → dataset handling
+numpy → numerical operations
+matplotlib → plotting
+python
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+👉
+Key tools:
+StandardScaler → normalize data
+PCA → dimensionality reduction
+🔹
+2. DATASET LOADING
+python
+data = pd.read_csv("sonar.csv", header=None)
+👉
+Loads Sonar dataset
+python
+X = data.iloc[:, :-1].values
+y = data.iloc[:, -1].values
+👉
+Splits data:
+X → input features (60 features)
+y → output labels
+python
+Exported with AI Exporter
+252 / 282
+y = np.where(y == 'M', 1, 0)
+👉
+Converts:
+Mine → 1
+Rock → 0
+👉
+Needed because: ✔ Models work with numbers
+🔹
+3. STANDARDIZATION
+python
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+👉
+Very important step
+✔ Mean = 0
+✔ Standard deviation = 1
+👉
+Why needed? 
+➡
+ PCA is sensitive to scale
+➡
+All features must be equally important
+🔹
+4. APPLY PCA
+python
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X_scaled)
+👉
+Key step
+What happens:
+n_components=2 → reduce data to 2 features
+PCA finds directions with maximum variance
+👉
+Output:
+New dataset with 2 dimensions
+Exported with AI Exporter
+253 / 282
+�
+�
+5. EXPLAINED VARIANCE
+python
+print("Explained Variance:", pca.explained_variance_ratio_)
+👉
+Shows: ✔ How much information each component retains
+Example:
+text
+[0.45, 0.25]
+👉
+Means:
+First component → 45% information
+Second → 25%
+🔹
+6. PLOTTING
+python
+plt.scatter(X_pca[:,0], X_pca[:,1], c=y)
+👉
+Plots:
+X-axis → Principal Component 1
+Y-axis → Principal Component 2
+👉
+c=y → colors based on class
+python
+plt.title("PCA - Sonar Dataset")
+👉
+Adds title
+python
+plt.xlabel("Principal Component 1")
+plt.ylabel("Principal Component 2")
+Exported with AI Exporter
+254 / 282
+�
+�
+Labels axes
+🔹
+7. FINAL OUTPUT
+👉
+Graph shows: ✔ Reduced data
+✔ Class separation
+🧠
+COMPLETE WORKING FLOW
+👉
+Load dataset
+→ Convert labels
+→ Standardize data
+→ Apply PCA
+→ Reduce dimensions
+→ Plot transformed data
+🎤
+DETAILED VIVA EXPLANATION SCRIPT
+👉
+Say this confidently 
+�
+�
+👉
+“This program implements Principal Component Analysis for dimensionality reduction on the
+Sonar dataset.”
+👉
+👉
+👉
+👉
+“First, the dataset is loaded and divided into input features and output labels.”
+“The output labels are converted into numeric form for processing.”
+“Next, the data is standardized using StandardScaler to ensure all features have equal importance.”
+“PCA is then applied to reduce the dataset into two principal components that capture maximum
+variance.”
+👉
+👉
+“The explained variance ratio shows how much information each component retains.”
+“Finally, the transformed data is visualized using a scatter plot.”
+🔥
+STRONG CLOSING LINE
+👉
+“PCA reduces dimensionality while preserving maximum variance, improving efficiency and
+visualization.

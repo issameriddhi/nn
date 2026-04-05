@@ -1,0 +1,38 @@
+INTRODUCTION — MLP FOR XOR (DETAILED)
+🔹 What is MLP?
+
+👉 A Multilayer Perceptron (MLP) is an advanced neural network consisting of:
+
+Input layer
+Hidden layer(s)
+Output layer
+
+It can solve non-linear problems using activation functions and backpropagation.
+
+🔹 Why XOR needs MLP?
+
+👉 XOR is not linearly separable
+
+This means:
+❌ A single line cannot separate the classes
+
+So:
+✔ Perceptron fails
+✔ MLP works (because of hidden layer)
+
+🔹 How MLP solves XOR?
+
+👉 MLP transforms input using hidden layer into a space where it becomes separable.
+
+🔹 Working of MLP
+Forward Pass
+Input → Hidden → Output
+Apply activation (sigmoid)
+Error Calculation
+Compare predicted vs actual
+Backpropagation
+Propagate error backward
+Weight Update
+
+
+Adjust weights to reduce error

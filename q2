@@ -1,0 +1,100 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# =========================
+# XOR DATASET
+# =========================
+
+X = np.array([
+    [0,0],
+    [0,1],
+    [1,0],
+    [1,1]
+])
+
+y = np.array([0,1,1,0])
+
+
+# =========================
+# INITIALIZATION
+# =========================
+
+np.random.seed(1)
+
+input_size = 2
+hidden_size = 2
+output_size = 1
+
+# Weights
+W1 = np.random.rand(input_size, hidden_size)
+b1 = np.random.rand(hidden_size)
+
+W2 = np.random.rand(hidden_size, output_size)
+b2 = np.random.rand(output_size)
+
+
+# =========================
+# ACTIVATION FUNCTION
+# =========================
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+
+# =========================
+# TRAINING (BACKPROP)
+# =========================
+
+lr = 0.5
+epochs = 5000
+
+for epoch in range(epochs):
+
+    # Forward pass
+    hidden = sigmoid(np.dot(X, W1) + b1)
+    output = sigmoid(np.dot(hidden, W2) + b2)
+
+    # Error
+    error = y.reshape(-1,1) - output
+
+    # Backpropagation
+    d_output = error * output * (1 - output)
+    d_hidden = d_output.dot(W2.T) * hidden * (1 - hidden)
+
+    # Update weights
+    W2 += lr * hidden.T.dot(d_output)
+    b2 += lr * d_output.sum(axis=0)
+
+    W1 += lr * X.T.dot(d_hidden)
+    b1 += lr * d_hidden.sum(axis=0)
+
+
+# =========================
+# PREDICTION
+# =========================
+
+hidden = sigmoid(np.dot(X, W1) + b1)
+output = sigmoid(np.dot(hidden, W2) + b2)
+
+predictions = (output >= 0.5).astype(int)
+
+print("Predictions:")
+for i in range(len(X)):
+    print(X[i], "->", predictions[i][0])
+
+
+# =========================
+# PLOT
+# =========================
+
+x0 = X[y==0]
+x1 = X[y==1]
+
+plt.scatter(x0[:,0], x0[:,1], label="Class 0")
+plt.scatter(x1[:,0], x1[:,1], label="Class 1")
+
+plt.title("XOR using MLP")
+plt.xlabel("X1")
+plt.ylabel("X2")
+plt.legend()
+plt.show()

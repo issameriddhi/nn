@@ -1,0 +1,56 @@
+import numpy as np
+import matplotlib.pyplot as plt
+# =========================
+# XOR DATASET
+# =========================
+X = np.array([
+[0,0],
+[0,1],
+[1,0],
+[1,1]
+Exported with AI Exporter
+240 / 282
+])
+y = np.array([0,1,1,0])
+# =========================
+# RBF FUNCTION (GAUSSIAN)
+# =========================
+def rbf(x, c, sigma=1.0):
+return np.exp(-np.linalg.norm(x - c)**2 / (2 * sigma**2))
+# =========================
+# CENTERS (USING DATA POINTS)
+# =========================
+centers = X.copy()
+# =========================
+# BUILD G MATRIX
+# =========================
+G = np.array([
+[rbf(x, c) for c in centers]
+for x in X
+])
+# =========================
+# COMPUTE WEIGHTS
+# =========================
+W = np.linalg.pinv(G) @ y
+# =========================
+# PREDICTION
+# =========================
+G_test = G
+output = G_test @ W
+predictions = (output >= 0.5).astype(int)
+print("Predictions:")
+for i in range(len(X)):
+241 / 282 Exported with AI Exporter
+print(X[i], "->", predictions[i])
+# =========================
+# PLOT
+# =========================
+x0 = X[y==0]
+x1 = X[y==1]
+plt.scatter(x0[:,0], x0[:,1], label="Class 0")
+plt.scatter(x1[:,0], x1[:,1], label="Class 1")
+plt.title("XOR using RBF Network")
+plt.xlabel("X1")
+plt.ylabel("X2")
+plt.legend()
+plt.show()

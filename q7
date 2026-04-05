@@ -1,0 +1,70 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_blobs
+# =========================
+# DATASET
+# =========================
+X, _ = make_blobs(n_samples=100, centers=3, random_state=42)
+# =========================
+# NORMALIZATION
+# =========================
+def normalize(X):
+return (X - X.min(axis=0)) / (X.max(axis=0) - X.min(axis=0) + 1e-10)
+# =========================
+# COMPLEMENT CODING
+# =========================
+def complement_code(X):
+return np.concatenate([X, 1 - X], axis=1)
+# =========================
+# FUZZY ART MODEL
+# =========================
+class FuzzyART:
+def __init__(self, alpha=0.001, beta=1.0, vigilance=0.7):
+self.alpha = alpha
+self.beta = beta
+self.vigilance = vigilance
+self.weights = []
+def fuzzy_and(self, x, w):
+return np.minimum(x, w)
+Exported with AI Exporter
+258 / 282
+    def match(self, x, w):
+        return np.sum(self.fuzzy_and(x, w)) / np.sum(x)
+    def learn(self, x, w):
+        return self.beta * self.fuzzy_and(x, w) + (1 - self.beta) * w
+    def fit(self, X):
+        X = complement_code(normalize(X))
+        for x in X:
+            for i, w in enumerate(self.weights):
+                if self.match(x, w) >= self.vigilance:
+                    self.weights[i] = self.learn(x, w)
+                    break
+            else:
+                self.weights.append(x.copy())
+    def predict(self, X):
+        X = complement_code(normalize(X))
+        labels = []
+        for x in X:
+            label = -1
+            for i, w in enumerate(self.weights):
+                if self.match(x, w) >= self.vigilance:
+                    label = i
+                    break
+            labels.append(label)
+        return labels
+# =========================
+# TRAIN MODEL
+# =========================
+model = FuzzyART(vigilance=0.7)
+model.fit(X)
+labels = model.predict(X)
+# =========================
+# PLOT
+# =========================
+X_norm = normalize(X)
+Exported with AI Exporter 259 / 282
+plt.scatter(X_norm[:,0], X_norm[:,1], c=labels)
+plt.title("SOM using ART (Clustering)")
+plt.xlabel("Feature 1")
+plt.ylabel("Feature 2")
+plt.show()

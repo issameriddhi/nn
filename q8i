@@ -1,0 +1,141 @@
+🔺
+1. TRIANGULAR FUNCTION
+🔹
+Code Logic
+Exported with AI Exporter
+277 / 282
+python
+x = np.arange(0, 11, 1)
+👉
+Defines input range (universe of discourse)
+python
+low = fuzz.trimf(x, [0, 0, 5])
+👉
+Triangular membership defined by 3 points
+Starts at 0
+Peaks at 0
+Ends at 5
+python
+medium = fuzz.trimf(x, [2, 5, 8])
+high = fuzz.trimf(x, [5, 10, 10])
+👉
+Creates overlapping fuzzy sets
+python
+value = 6
+👉
+Input value
+python
+fuzz.interp_membership(...)
+👉
+Finds degree of membership of input
+Example:
+text
+value = 6 → medium ≈ 0.8
+Exported with AI Exporter
+278 / 282
+python
+plt.plot(...)
+👉
+Plots membership functions
+python
+plt.axvline(value)
+👉
+Shows input position
+🟧
+2. TRAPEZOIDAL FUNCTION
+🔹
+Code Logic
+python
+low = fuzz.trapmf(x, [0,0,20,40])
+👉
+Defined by 4 points
+Rising edge: 0 → 20
+Flat region: 20 → 40
+python
+medium = fuzz.trapmf(x, [30,40,60,70])
+👉
+Shows stable range (full membership)
+👉
+Difference from triangular: ✔ Has flat top → more realistic
+🔵
+3. GAUSSIAN FUNCTION
+🔹
+Code Logic
+python
+Exported with AI Exporter
+279 / 282
+low = fuzz.gaussmf(x, 20, 10)
+👉
+Parameters:
+20 → center
+10 → spread (sigma)
+👉
+Smooth bell curve
+python
+value = 60
+👉
+Membership gradually decreases as distance increases
+👉
+Advantage: ✔ No sharp edges
+🟣
+4. MEXICAN HAT FUNCTION
+🔹
+Code Logic
+python
+def mexican_hat(x, sigma=1):
+👉
+Custom function
+python
+(1 - (x**2 / sigma**2)) * exp(...)
+👉
+Produces:
+Peak at center
+Negative side lobes
+👉
+Used for: ✔ feature detection
+Exported with AI Exporter
+280 / 282
+�
+�
+COMMON WORKING FLOW (VERY IMPORTANT)
+👉
+Same for ALL fuzzy systems:
+1. Define input range
+2. Define membership functions
+3. Take input value
+4. Calculate membership degree
+5. Plot functions
+6. Visualize result
+🎤
+COMPLETE VIVA SCRIPT (VERY IMPORTANT)
+👉
+Say this confidently 
+�
+�
+👉
+👉
+👉
+“This program demonstrates fuzzy logic systems using different membership functions.”
+“First, we define the universe of discourse using a numerical range.”
+“Then, we define membership functions such as triangular, trapezoidal, and Gaussian using
+predefined functions.”
+👉
+👉
+“Each membership function represents a fuzzy set like low, medium, or high.”
+“An input value is taken, and its degree of membership in each fuzzy set is calculated using
+interpolation.”
+👉
+“The membership functions are then plotted to visualize how the input belongs to different fuzzy
+sets.”
+👉
+👉
+👉
+👉
+“Triangular functions are simple and computationally efficient.”
+“Trapezoidal functions represent stable ranges.”
+“Gaussian functions provide smooth transitions and are widely used in real-world applications.”
+“The Mexican hat function is used in advanced applications like signal processing.”
+🔥
+STRONG CLOSING LINE
+👉
+“Fuzzy systems model uncertainty by assigning degrees of membership rather than binary values.”

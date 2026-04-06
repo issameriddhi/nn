@@ -1,0 +1,70 @@
+import numpy as np
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+X, y = load_iris(return_X_y=True)
+y = (y==0).astype(int)
+
+X = StandardScaler().fit_transform(X)
+Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.2)
+
+# RBF functions
+def gauss(x,c): return np.exp(-np.linalg.norm(x-c)**2)
+def mq(x,c): return np.sqrt(np.linalg.norm(x-c)**2 + 1)
+
+cent = Xtr[:10]
+
+# Gaussian
+G = np.array([[gauss(x,c) for c in cent] for x in Xtr])
+W = np.linalg.pinv(G) @ ytr
+Gte = np.array([[gauss(x,c) for c in cent] for x in Xte])
+pred = (Gte @ W >= 0.5).astype(int)
+print("RBF Gaussian Acc:", (pred==yte).mean())
+
+# Multiquadric
+G2 = np.array([[mq(x,c) for c in cent] for x in Xtr])
+W2 = np.linalg.pinv(G2) @ ytr
+G2te = np.array([[mq(x,c) for c in cent] for x in Xte])
+pred2 = (G2te @ W2 >= 0.5).astype(int)
+print("RBF MQ Acc:", (pred2==yte).mean())
+
+
+
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPClassifier
+
+X, y = load_iris(return_X_y=True)
+X = StandardScaler().fit_transform(X)
+
+Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.2)
+
+# ReLU
+m1 = MLPClassifier(activation='relu', max_iter=300).fit(Xtr, ytr)
+print("ReLU Acc:", m1.score(Xte, yte))
+
+# Tanh
+m2 = MLPClassifier(activation='tanh', max_iter=300).fit(Xtr, ytr)
+print("Tanh Acc:", m2.score(Xte, yte))
+
+
+
+from sklearn.datasets import load_iris
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+
+X, y = load_iris(return_X_y=True)
+X = StandardScaler().fit_transform(X)
+
+# PCA with 2 components
+pca2 = PCA(n_components=2)
+X2 = pca2.fit_transform(X)
+
+# PCA with 3 components
+pca3 = PCA(n_components=3)
+X3 = pca3.fit_transform(X)
+
+print("Variance (2 comp):", sum(pca2.explained_variance_ratio_))
+print("Variance (3 comp):", sum(pca3.explained_variance_ratio_))
